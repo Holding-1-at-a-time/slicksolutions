@@ -1,7 +1,8 @@
-import { clerkMiddleware, clerkClient } from "@clerk/nextjs/server"
+// Import from our mock implementation instead
+import { authMiddleware, clerkClient } from "./lib/auth-mock"
 import { NextResponse } from "next/server"
 
-export default clerkMiddleware({
+export default authMiddleware({
   publicRoutes: [
     "/",
     "/api/webhook/clerk",

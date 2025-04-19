@@ -2,7 +2,6 @@ import type React from "react"
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { getBusinessBySlug } from "@/lib/multi-tenant"
-import BusinessLayout from "./page"
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const business = await getBusinessBySlug(params.slug)
@@ -33,6 +32,6 @@ export default async function Layout({
     return notFound()
   }
 
-  return <BusinessLayout business={business} params={params} children={children} />
+  return children
 }
 

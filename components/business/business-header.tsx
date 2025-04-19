@@ -4,8 +4,6 @@ import { useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
-import { useUser } from "@clerk/nextjs"
-import { useConvexAuth } from "convex/react"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {
@@ -25,13 +23,17 @@ interface BusinessHeaderProps {
 }
 
 export default function BusinessHeader({ business }: BusinessHeaderProps) {
-  const { user } = useUser()
-  const { isAuthenticated } = useConvexAuth()
   const router = useRouter()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
-  const userInitials =
-    user?.firstName && user?.lastName ? `${user.firstName[0]}${user.lastName[0]}` : user?.firstName?.[0] || "U"
+  // Mock user data
+  const user = {
+    firstName: "John",
+    lastName: "Doe",
+    imageUrl: "/placeholder.svg?height=40&width=40",
+  }
+
+  const userInitials = user?.firstName && user?.lastName ? `${user.firstName[0]}${user.lastName[0]}` : "U"
 
   return (
     <header className="sticky top-0 z-50 border-b bg-background">
@@ -51,7 +53,7 @@ export default function BusinessHeader({ business }: BusinessHeaderProps) {
         <div className="flex items-center gap-2">
           {business.logo ? (
             <Image
-              src={business.logo || "/placeholder.svg"}
+              src={business.logo || "/placeholder.svg?height=40&width=40"}
               alt={business.name}
               width={40}
               height={40}
@@ -83,7 +85,7 @@ export default function BusinessHeader({ business }: BusinessHeaderProps) {
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" size="icon" className="rounded-full">
                 <Avatar className="h-8 w-8">
-                  <AvatarImage src={user?.imageUrl} alt={user?.fullName || "User"} />
+                  <AvatarImage src={user?.imageUrl} alt="User" />
                   <AvatarFallback>{userInitials}</AvatarFallback>
                 </Avatar>
               </Button>
